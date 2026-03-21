@@ -65,7 +65,13 @@ function mz_vditor_GetUpload()
 {
   global $zbp;
   $uploadUrl = $zbp->host . 'zb_users/plugin/mz_vditor/upload.php';
-  $fileTypes = str_replace('|', ', .', $zbp->option['ZC_UPLOAD_FILETYPE']);
+  // 获取允许上传的文件类型列表
+  $arrFileTypes = explode('|', $zbp->option['ZC_UPLOAD_FILETYPE']);
+  // 数组前面添加一个点，表示文件类型
+  $fileTypes = array_map(function ($type) {
+    return '.' . $type;
+  }, $arrFileTypes);
+  $fileTypes = implode(', ', $fileTypes);
   return [
     'url' => $uploadUrl,
     'accept' => $fileTypes,
