@@ -159,13 +159,11 @@
           // theme: 'dark',
           cache: { enable: false },
           counter: { enable: true },
-          height: config.height,
           icon: ["ant", "material"][0],
           lang: "zh_CN",
           mode: "ir",
           outline: false,
-          placeholder: config.placeholder || "",
-          toolbar: toolbar,
+          toolbar,
           toolbarConfig: { pin: true },
           value: state.value, // 初始值
           input: function() {
@@ -199,21 +197,25 @@
     const contentEditor = createEditor({
       selector: "#editor_content",
       value: window.mzVditorPostInfo.ContentMarkdown,
-      height: 520,
       toolbar: baseToolbar,
       extraButtons: typeof contentBarBtn === "undefined" ? [] : contentBarBtn,
       readyList: typeof contentReady === "undefined" ? [] : contentReady,
-      placeholder: "开始写作...",
+      extend: {
+        height: 520,
+        placeholder: "开始写作...",
+      },
     });
 
     const introEditor = createEditor({
       selector: "#editor_intro",
       value: window.mzVditorPostInfo.IntroMarkdown,
-      height: 260,
       toolbar: introToolbar,
       extraButtons: typeof introBarBtn === "undefined" ? [] : introBarBtn,
       readyList: typeof introReady === "undefined" ? [] : introReady,
-      placeholder: "写点简介吧...",
+      extend: {
+        height: 260,
+        placeholder: "写点简介吧...",
+      },
     });
 
     if (contentEditor) {
