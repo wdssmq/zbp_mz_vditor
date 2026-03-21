@@ -203,6 +203,14 @@
       extend: {
         height: 520,
         placeholder: "开始写作...",
+        upload: {
+          ...window.mzVditorUploadInfo,
+          filename: (name) => {
+            // 移除特殊字符，只保留字母、数字、中文和扩展名  
+            return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, "")
+              .replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, "");
+          },
+        },
       },
     });
 

@@ -24,6 +24,11 @@ function mz_vditor_Edit_End()
     '<script>window.mzVditorPostInfo = %s;</script>',
     json_encode($postInfo, JSON_UNESCAPED_UNICODE)
   );
+  $uploadInfo = mz_vditor_GetUpload();
+  echo sprintf(
+    '<script>window.mzVditorUploadInfo = %s;</script>',
+    json_encode($uploadInfo, JSON_UNESCAPED_UNICODE)
+  );
   echo '<script>window.mzVditorCDN = "' . mz_vditor_Path('lib', 'host') . '";</script>';
   echo '<script src="' . mz_vditor_Path('lib-js', 'host') . '"></script>';
   echo '<script src="' . mz_vditor_Path('plugin-js', 'host') . '"></script>';
@@ -52,6 +57,19 @@ function mz_vditor_GetPost()
   return [
     'ContentMarkdown' => $contentMarkdown,
     'IntroMarkdown' => $introMarkdown,
+  ];
+}
+
+// 工具函数 - 获取文件上传地址及类型
+function mz_vditor_GetUpload()
+{
+  global $zbp;
+  $uploadUrl = $zbp->host . 'zb_users/plugin/mz_vditor/upload.php';
+  $fileTypes = str_replace('|', ', .', $zbp->option['ZC_UPLOAD_FILETYPE']);
+  return [
+    'url' => $uploadUrl,
+    'accept' => $fileTypes,
+    'token' => $zbp->GetCSRFToken('mz_vditor')
   ];
 }
 
