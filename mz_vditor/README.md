@@ -25,9 +25,12 @@ RSS 订阅：[https://feed.wdssmq.com](https://feed.wdssmq.com "沉冰浮水博�
 
 **Todo：**
 
-- 代码高亮
 - 摘要分隔
 
 ## 截图
 
 ![001](https://app.zblogcn.com/zb_users/upload/2026/03/202603211774077376367451.png)
+
+## 更新
+
+2026-03-22：初始版本发布
