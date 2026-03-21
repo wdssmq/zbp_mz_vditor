@@ -7,6 +7,8 @@ function ActivePlugin_mz_vditor()
   Add_Filter_Plugin('Filter_Plugin_Edit_Begin', 'mz_vditor_Edit_Begin');
   // 接口挂载 - 编辑页底部
   Add_Filter_Plugin('Filter_Plugin_Edit_End', 'mz_vditor_Edit_End');
+  // 接口挂载 - 文章模板
+  Add_Filter_Plugin('Filter_Plugin_ViewPost_Template', 'mz_vditor_ViewPost');
 }
 
 // 接口函数 - 编辑页头部
@@ -32,6 +34,18 @@ function mz_vditor_Edit_End()
   echo '<script>window.mzVditorCDN = "' . mz_vditor_Path('lib', 'host') . '";</script>';
   echo '<script src="' . mz_vditor_Path('lib-js', 'host') . '"></script>';
   echo '<script src="' . mz_vditor_Path('plugin-js', 'host') . '"></script>';
+}
+
+// 接口函数 - 文章模板
+function mz_vditor_ViewPost(&$template)
+{
+  global $zbp;
+  $style = mz_vditor_Path('highlight-css', 'host');
+  $zbp->header .= "<link rel=\"stylesheet\" href=\"{$style}\">";
+
+  $script= mz_vditor_Path('highlight-js', 'host');
+  $zbp->footer .= "<script src=\"{$script}\"></script>";
+  $zbp->footer .= "<script>hljs.highlightAll();</script>";
 }
 
 // 工具函数 - 获取文章信息
@@ -85,6 +99,13 @@ function mz_vditor_Path($file, $t = 'path')
   global $zbp;
   $result = $zbp->$t . 'zb_users/plugin/mz_vditor/';
   switch ($file) {
+    case 'highlight-js':
+      return $result . 'lib/highlight/highlight.min.js';
+      break;
+    case 'highlight-css':
+      // github-dark obsidian
+      return $result . 'lib/highlight/styles/obsidian.min.css';
+      break;
     case 'plugin-js':
       return $result . 'lib/vditor.editor.js';
       break;
