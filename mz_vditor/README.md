@@ -25,8 +25,8 @@ RSS 订阅：[https://feed.wdssmq.com](https://feed.wdssmq.com "沉冰浮水博�
 
 **Todo：**
 
-- 图片上传还没搞；
-- 摘要分隔也没搞；
+- 代码高亮
+- 摘要分隔
 
 ## 截图
 
