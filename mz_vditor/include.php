@@ -43,7 +43,7 @@ function mz_vditor_ViewPost(&$template)
   $style = mz_vditor_Path('highlight-css', 'host');
   $zbp->header .= "<link rel=\"stylesheet\" href=\"{$style}\">";
 
-  $script= mz_vditor_Path('highlight-js', 'host');
+  $script = mz_vditor_Path('highlight-js', 'host');
   $zbp->footer .= "<script src=\"{$script}\"></script>";
   $zbp->footer .= "<script>hljs.highlightAll();</script>";
 }
@@ -51,9 +51,9 @@ function mz_vditor_ViewPost(&$template)
 // 工具函数 - 获取文章信息
 function mz_vditor_GetPost()
 {
-  global $article;
+  global $article, $zbp;
   if (!$article) {
-    return null;
+    $article = $zbp->template->GetTags('article');
   }
   $contentMarkdown = '';
   $introMarkdown   = '';
