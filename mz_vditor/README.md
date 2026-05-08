@@ -33,4 +33,6 @@ RSS 订阅：[https://feed.wdssmq.com](https://feed.wdssmq.com "沉冰浮水博�
 
 ## 更新
 
-2026-03-22：初始版本发布
+2026-05-08：API 操作接口；
+
+2026-03-22：初始版本发布；
