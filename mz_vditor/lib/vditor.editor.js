@@ -140,7 +140,6 @@
     // 对于旧文章，如果没有 markdown 内容，则使用 html 转换
     const html2md = (_editor) => {
       if (state.value === "" && state.html !== "") {
-        console.log(144);
         try {
           state.value = _editor.html2md(state.html);
           _editor.setValue(state.value);
@@ -198,12 +197,10 @@
 
     target.obj = instance.editor;
     target.get = function() {
-      return instance.state.html;
+      return instance.state.value;
     };
     target.put = function(str) {
-      instance.state.html = str || "";
-      instance.textarea.val(instance.state.html);
-      if (instance.isReady && instance.isReady() && instance.editor && instance.editor.vditor && instance.editor.vditor.currentMode) {
+      if (instance.isReady()) {
         instance.editor.setValue(str || "");
         instance.sync();
       }
