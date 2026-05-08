@@ -192,6 +192,31 @@
     return { editor: editor, sync: sync, textarea: $textarea, state: state, isReady: function() { return isReady; } };
   };
 
+  // 绑定实例到全局对象
+  const bindEditorApi = function(target, instance) {
+    if (!target || !instance) return;
+
+    target.obj = instance.editor;
+    target.get = function() {
+      return instance.state.html;
+    };
+    target.put = function(str) {
+      instance.state.html = str || "";
+      instance.textarea.val(instance.state.html);
+      if (instance.isReady && instance.isReady() && instance.editor && instance.editor.vditor && instance.editor.vditor.currentMode) {
+        instance.editor.setValue(str || "");
+        instance.sync();
+      }
+    };
+    target.focus = function() {
+      return instance.editor.focus();
+    };
+    target.insert = function(str) {
+      instance.editor.insertValue(str || "");
+      instance.sync();
+    };
+  };
+
   // 编辑器 API
   const editor_init = function() {
     const contentEditor = createEditor({
@@ -206,7 +231,7 @@
         upload: {
           ...window.mzVditorUploadInfo,
           filename: (name) => {
-            // 移除特殊字符，只保留字母、数字、中文和扩展名  
+            // 移除特殊字符，只保留字母、数字、中文和扩展名
             return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, "")
               .replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, "");
           },
@@ -227,25 +252,7 @@
     });
 
     if (contentEditor) {
-      editor_api.editor.content.obj = contentEditor.editor;
-      editor_api.editor.content.get = function() {
-        return contentEditor.state.html;
-      };
-      editor_api.editor.content.put = function(str) {
-        contentEditor.state.html = str || "";
-        contentEditor.textarea.val(contentEditor.state.html);
-        if (contentEditor.isReady && contentEditor.isReady() && contentEditor.editor && contentEditor.editor.vditor && contentEditor.editor.vditor.currentMode) {
-          contentEditor.editor.setValue(str || "");
-          contentEditor.sync();
-        }
-      };
-      editor_api.editor.content.focus = function() {
-        return contentEditor.editor.focus();
-      };
-      editor_api.editor.content.insert = function(str) {
-        contentEditor.editor.insertValue(str || "");
-        contentEditor.sync();
-      };
+      bindEditorApi(editor_api.editor.content, contentEditor);
       contentEditor.sync();
       if (typeof sContent !== "undefined") {
         sContent = editor_api.editor.content.get();
@@ -253,25 +260,7 @@
     }
 
     if (introEditor) {
-      editor_api.editor.intro.obj = introEditor.editor;
-      editor_api.editor.intro.get = function() {
-        return introEditor.state.html;
-      };
-      editor_api.editor.intro.put = function(str) {
-        introEditor.state.html = str || "";
-        introEditor.textarea.val(introEditor.state.html);
-        if (introEditor.isReady && introEditor.isReady() && introEditor.editor && introEditor.editor.vditor && introEditor.editor.vditor.currentMode) {
-          introEditor.editor.setValue(str || "");
-          introEditor.sync();
-        }
-      };
-      editor_api.editor.intro.focus = function() {
-        return introEditor.editor.focus();
-      };
-      editor_api.editor.intro.insert = function(str) {
-        introEditor.editor.insertValue(str || "");
-        introEditor.sync();
-      };
+      bindEditorApi(editor_api.editor.intro, introEditor);
     }
   };
 
