@@ -32,8 +32,8 @@ function mz_vditor_Edit_End()
     json_encode($uploadInfo, JSON_UNESCAPED_UNICODE)
   );
   echo '<script>window.mzVditorCDN = "' . mz_vditor_Path('lib', 'host') . '";</script>';
-  echo '<script src="' . mz_vditor_Path('lib-js', 'host') . '"></script>';
-  echo '<script src="' . mz_vditor_Path('plugin-js', 'host') . '"></script>';
+  echo '<script src="' . mz_vditor_Path('lib-js', 'host') . '?v=20260508102"></script>';
+  echo '<script src="' . mz_vditor_Path('plugin-js', 'host') . '?v=20260508102"></script>';
 }
 
 // 接口函数 - 文章模板
@@ -41,10 +41,10 @@ function mz_vditor_ViewPost(&$template)
 {
   global $zbp;
   $style = mz_vditor_Path('highlight-css', 'host');
-  $zbp->header .= "<link rel=\"stylesheet\" href=\"{$style}\">";
+  $zbp->header .= "<link rel=\"stylesheet\" href=\"{$style}?v=20260508102\">";
 
   $script = mz_vditor_Path('highlight-js', 'host');
-  $zbp->footer .= "<script src=\"{$script}\"></script>";
+  $zbp->footer .= "<script src=\"{$script}?v=20260508102\"></script>";
   $zbp->footer .= "<script>hljs.highlightAll();</script>";
 }
 
